@@ -1,3 +1,6 @@
 # POC-AspNet-SSO
-Prove of Concept
-AspNet Single Sign On (+IdentityServer3)
+ADSPrev - Prova de Conceito
+AspNet WebForms Single Sign On (+IdentityServer3)
+
+Links:
+http://identityserver.github.io/
