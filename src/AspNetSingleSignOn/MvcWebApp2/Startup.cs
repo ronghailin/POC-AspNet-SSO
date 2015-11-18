@@ -26,16 +26,14 @@ namespace MvcWebApp2
         {
             JwtSecurityTokenHandler.InboundClaimTypeMap = new Dictionary<string, string>();
 
-            app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
-                AuthenticationType = "Cookies",
-                ExpireTimeSpan = TimeSpan.FromDays(7)
+                AuthenticationType = "Cookies"
             });
 
             app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
             {
-                ClientId = "implicitclientmvc2",
+                ClientId = "implicitclient-cardeal",
                 Authority = Constants.BaseAddress,
                 RedirectUri = "http://localhost:57871/",
                 ResponseType = "id_token token",
