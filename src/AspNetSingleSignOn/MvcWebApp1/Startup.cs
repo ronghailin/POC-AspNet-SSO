@@ -5,6 +5,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Notifications;
 using Microsoft.Owin.Security.OpenIdConnect;
 using MvcWebApp1;
+using MvcWebApp1.Security;
 using Owin;
 using SharedConfiguration;
 using System;
@@ -45,6 +46,8 @@ namespace MvcWebApp1
                     SecurityTokenValidated = SecurityTokenValidated
                 }
             });
+
+            app.UseResourceAuthorization(new AuthorizationManager());
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

@@ -1,5 +1,8 @@
-﻿using WebHost.AspId;
-using WebHost.IdSvr;
+﻿using IdentityServer3.Core.Configuration;
+using IdentityServer3.Core.Services;
+using IdentityServer3.Core.Services.Default;
+using IdentityServer3.Core.Services.InMemory;
+
 /*
  * Copyright 2014 Dominick Baier, Brock Allen
  *
@@ -21,10 +24,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IdentityServer3.Core.Configuration;
-using IdentityServer3.Core.Services;
-using IdentityServer3.Core.Services.InMemory;
-using IdentityServer3.Core.Services.Default;
+using WebHost.AspId;
+using WebHost.IdSvr;
 
 namespace WebHost.IdSvr
 {
@@ -34,7 +35,10 @@ namespace WebHost.IdSvr
         {
             var factory = new IdentityServerServiceFactory();
 
-            var scopeStore = new InMemoryScopeStore(Scopes.Get());
+            var scopes = Scopes.Get().ToList();
+            scopes.ForEach(s => s.IncludeAllClaimsForUser = true);
+
+            var scopeStore = new InMemoryScopeStore(scopes);
             factory.ScopeStore = new Registration<IScopeStore>(scopeStore);
             var clientStore = new InMemoryClientStore(Clients.Get());
             factory.ClientStore = new Registration<IClientStore>(clientStore);

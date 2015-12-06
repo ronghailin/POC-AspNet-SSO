@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-using System.Collections.Generic;
-using System.Linq;
+
 using IdentityServer3.Core;
 using IdentityServer3.Core.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WebHost.IdSvr
 {
@@ -35,14 +36,14 @@ namespace WebHost.IdSvr
                     Name = "read",
                     DisplayName = "Read data",
                     Type = ScopeType.Resource,
-                    Emphasize = false,
+                    Emphasize = false
                 },
                 new Scope
                 {
                     Name = "write",
                     DisplayName = "Write data",
                     Type = ScopeType.Resource,
-                    Emphasize = true,
+                    Emphasize = true
                 },
                 new Scope
                 {

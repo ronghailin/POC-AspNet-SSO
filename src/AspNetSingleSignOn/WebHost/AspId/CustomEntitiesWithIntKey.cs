@@ -23,16 +23,6 @@ using System.Web;
 
 namespace WebHost.AspId
 {
-    public class CustomUser : IdentityUser<int, CustomUserLogin, CustomUserRole, CustomUserClaim> { }
-
-    public class CustomUserLogin : IdentityUserLogin<int> { }
-
-    public class CustomUserRole : IdentityUserRole<int> { }
-
-    public class CustomUserClaim : IdentityUserClaim<int> { }
-
-    public class CustomRole : IdentityRole<int, CustomUserRole> { }
-
     public class CustomContext : IdentityDbContext<CustomUser, CustomRole, int, CustomUserLogin, CustomUserRole, CustomUserClaim>
     {
         public CustomContext(string connString)
@@ -41,17 +31,11 @@ namespace WebHost.AspId
         }
     }
 
-    public class CustomUserStore : UserStore<CustomUser, CustomRole, int, CustomUserLogin, CustomUserRole, CustomUserClaim>
-    {
-        public CustomUserStore(CustomContext ctx)
-            : base(ctx)
-        {
-        }
-    }
+    public class CustomRole : IdentityRole<int, CustomUserRole> { }
 
-    public class CustomUserManager : UserManager<CustomUser, int>
+    public class CustomRoleManager : RoleManager<CustomRole, int>
     {
-        public CustomUserManager(CustomUserStore store)
+        public CustomRoleManager(CustomRoleStore store)
             : base(store)
         {
         }
@@ -65,10 +49,28 @@ namespace WebHost.AspId
         }
     }
 
-    public class CustomRoleManager : RoleManager<CustomRole, int>
+    public class CustomUser : IdentityUser<int, CustomUserLogin, CustomUserRole, CustomUserClaim> { }
+
+    public class CustomUserClaim : IdentityUserClaim<int> { }
+
+    public class CustomUserLogin : IdentityUserLogin<int>
     {
-        public CustomRoleManager(CustomRoleStore store)
+    }
+
+    public class CustomUserManager : UserManager<CustomUser, int>
+    {
+        public CustomUserManager(CustomUserStore store)
             : base(store)
+        {
+        }
+    }
+
+    public class CustomUserRole : IdentityUserRole<int> { }
+
+    public class CustomUserStore : UserStore<CustomUser, CustomRole, int, CustomUserLogin, CustomUserRole, CustomUserClaim>
+    {
+        public CustomUserStore(CustomContext ctx)
+            : base(ctx)
         {
         }
     }

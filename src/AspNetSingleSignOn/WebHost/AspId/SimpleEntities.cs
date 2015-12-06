@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -24,39 +25,6 @@ using IdSvr3 = IdentityServer3.Core;
 
 namespace WebHost.AspId
 {
-    public class User : IdentityUser
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    }
-
-    public class Role : IdentityRole { }
-
-    public class Context : IdentityDbContext<User, Role, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>
-    {
-        public Context(string connString)
-            : base(connString)
-        {
-        }
-    }
-
-    public class UserStore : UserStore<User, Role, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>
-    {
-        public UserStore(Context ctx)
-            : base(ctx)
-        {
-        }
-    }
-
-    public class UserManager : UserManager<User, string>
-    {
-        public UserManager(UserStore store)
-            : base(store)
-        {
-            this.ClaimsIdentityFactory = new ClaimsFactory();
-        }
-    }
-
     public class ClaimsFactory : ClaimsIdentityFactory<User, string>
     {
         public ClaimsFactory()
@@ -80,14 +48,16 @@ namespace WebHost.AspId
             return ci;
         }
     }
-    
-    public class RoleStore : RoleStore<Role>
+
+    public class Context : IdentityDbContext<User, Role, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>
     {
-        public RoleStore(Context ctx)
-            : base(ctx)
+        public Context(string connString)
+            : base(connString)
         {
         }
     }
+
+    public class Role : IdentityRole { }
 
     public class RoleManager : RoleManager<Role>
     {
@@ -97,5 +67,35 @@ namespace WebHost.AspId
         }
     }
 
+    public class RoleStore : RoleStore<Role>
+    {
+        public RoleStore(Context ctx)
+            : base(ctx)
+        {
+        }
+    }
 
+    public class User : IdentityUser
+    {
+        public string Cpf { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+
+    public class UserManager : UserManager<User, string>
+    {
+        public UserManager(UserStore store)
+            : base(store)
+        {
+            this.ClaimsIdentityFactory = new ClaimsFactory();
+        }
+    }
+
+    public class UserStore : UserStore<User, Role, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim>
+    {
+        public UserStore(Context ctx)
+            : base(ctx)
+        {
+        }
+    }
 }
